@@ -2,10 +2,10 @@ package com.cappuccino.foodcourter.security;
 
 public final class SecurityConstants {
 
-    public static final String AUTH_LOGIN_URL = "/api/authenticate";
+    public static final String AUTH_LOGIN_URL = "/api/public/authenticate";
 
     // Signing key for HS512 algorithm
-    public static final String JWT_SECRET = "5f46868ca2e74b4cabb69c1c14fb0ba5";
+    public static final String JWT_SECRET = "kXp2s5v8y/B?E(H+MbQeThWmZq3t6w9z$C&F)J@NcRfUjXn2r5u7x!A%D*G-KaPd";
 
     // JWT token defaults
     public static final String TOKEN_HEADER = "Authorization";

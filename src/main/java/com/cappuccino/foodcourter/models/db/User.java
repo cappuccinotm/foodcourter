@@ -40,6 +40,7 @@ public class User extends Auditable {
         return role;
     }
 
+    @JsonIgnore
     public User setRole(Role role) {
         this.role = role;
         return this;
@@ -93,7 +94,7 @@ public class User extends Auditable {
         return new JSONObject()
                 .put("id", id)
                 .put("email", email)
-                .put("role", role)
+                .put("role", role.toJSONObject())
                 .put("needToChangePassword", needToChangePassword);
     }
 }
