@@ -1,6 +1,7 @@
 package com.cappuccino.foodcourter.models.db;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "branches")
@@ -19,6 +20,31 @@ public class Branch extends Auditable {
     )
     @JoinColumn(name = "vendor_id")
     private Vendor vendor;
+
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.DETACH
+    )
+    @JoinTable(
+            joinColumns = @JoinColumn(
+                    name = "branch_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "product_id",
+                    referencedColumnName = "id"
+            )
+    )
+    private Set<Product> products;
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public Branch setProducts(Set<Product> products) {
+        this.products = products;
+        return this;
+    }
 
     public Integer getId() {
         return id;
