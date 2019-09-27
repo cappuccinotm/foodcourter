@@ -1,8 +1,11 @@
 package com.cappuccino.foodcourter.services;
 
+import com.cappuccino.foodcourter.models.api.UserRegistrationData;
 import com.cappuccino.foodcourter.models.db.Privilege;
 import com.cappuccino.foodcourter.models.db.Role;
 import com.cappuccino.foodcourter.models.db.User;
+import com.cappuccino.foodcourter.models.exceptions.RoleNotFoundException;
+import com.cappuccino.foodcourter.models.exceptions.UsernameAlreadyTakenException;
 import com.cappuccino.foodcourter.repositories.PrivilegesRepository;
 import com.cappuccino.foodcourter.repositories.RolesRepository;
 import com.cappuccino.foodcourter.repositories.UsersRepository;
@@ -55,7 +58,7 @@ public class UsersServiceImpl implements UsersService {
 
         // Создаём стандартные роли
         Role superuser = createRoleIfNotExist(
-                Role.StandartRoles.SUPERUSER,
+                Role.StandardRoles.SUPERUSER,
                 new HashSet<>(Arrays.asList(
                         createNewBackendUsersPrivilege,
                         editBackendUsersPrivilege
@@ -134,6 +137,25 @@ public class UsersServiceImpl implements UsersService {
                 userPassword
         ));
         mailingClient.sendEmail(mailMessage);
+    }
+
+    @Override
+    public User register(UserRegistrationData userData) throws UsernameAlreadyTakenException, RoleNotFoundException {
+        if(usersRepository.existsByEmail(userData.getUsername()))
+            throw new UsernameAlreadyTakenException();
+
+        Role role = rolesRepository.findByCode(userData.getRoleCode());
+        if(role == null)
+            throw new RoleNotFoundException();
+
+        return usersRepository.save(
+                new User()
+                    .setEmail(userData.getUsername())
+                    .setPassword(passwordEncoder.encode(userData.getPassword()))
+                    .setRole(role)
+                    .setNeedToChangePassword(true)
+                    .setPhoneNumber(userData.getPhoneNumber())
+        );
     }
 
     @Override

@@ -36,6 +36,22 @@ public class User extends Auditable {
     @Column(name = "need_to_change_password", nullable = false)
     private Boolean needToChangePassword = true;
 
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    public Boolean getNeedToChangePassword() {
+        return needToChangePassword;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public User setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        return this;
+    }
+
     public Role getRole() {
         return role;
     }
@@ -44,10 +60,6 @@ public class User extends Auditable {
     public User setRole(Role role) {
         this.role = role;
         return this;
-    }
-
-    public Boolean isNeedToChangePassword() {
-        return needToChangePassword;
     }
 
     public User setNeedToChangePassword(Boolean needToChangePassword) {
