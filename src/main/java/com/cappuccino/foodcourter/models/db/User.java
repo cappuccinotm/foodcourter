@@ -26,24 +26,24 @@ public class User extends Auditable {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @ManyToMany(
+    @ManyToOne(
             fetch = FetchType.LAZY,
             cascade = CascadeType.DETACH
     )
-    @JoinTable(
-            joinColumns = @JoinColumn(
-                    name = "user_id",
-                    referencedColumnName = "id"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "privilege_id",
-                    referencedColumnName = "id"
-            )
-    )
-    private Set<Privilege> privileges;
+    @JoinColumn(name = "role_id")
+    private Role role;
 
     @Column(name = "need_to_change_password", nullable = false)
     private Boolean needToChangePassword = true;
+
+    public Role getRole() {
+        return role;
+    }
+
+    public User setRole(Role role) {
+        this.role = role;
+        return this;
+    }
 
     public Boolean isNeedToChangePassword() {
         return needToChangePassword;
@@ -56,7 +56,7 @@ public class User extends Auditable {
 
     public List<GrantedAuthority> getAuthorities(){
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for(Privilege privilege: privileges){
+        for(Privilege privilege: role.getPrivileges()){
             authorities.add((GrantedAuthority) privilege::getCode);
         }
         return authorities;
@@ -89,20 +89,11 @@ public class User extends Auditable {
         return this;
     }
 
-    public Set<Privilege> getPrivileges() {
-        return privileges;
-    }
-
-    public User setPrivileges(Set<Privilege> privileges) {
-        this.privileges = privileges;
-        return this;
-    }
-
     public JSONObject toJSONObject(){
         return new JSONObject()
                 .put("id", id)
                 .put("email", email)
-                .put("privileges", privileges)
+                .put("role", role)
                 .put("needToChangePassword", needToChangePassword);
     }
 }

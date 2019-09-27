@@ -1,8 +1,10 @@
 package com.cappuccino.foodcourter.services;
 
 import com.cappuccino.foodcourter.models.db.Privilege;
+import com.cappuccino.foodcourter.models.db.Role;
 import com.cappuccino.foodcourter.models.db.User;
 import com.cappuccino.foodcourter.repositories.PrivilegesRepository;
+import com.cappuccino.foodcourter.repositories.RolesRepository;
 import com.cappuccino.foodcourter.repositories.UsersRepository;
 import com.cappuccino.foodcourter.resources.StaticStrings;
 import com.cappuccino.foodcourter.utils.PasswordGenerator;
@@ -24,6 +26,7 @@ public class UsersServiceImpl implements UsersService {
     private final PrivilegesRepository privilegesRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final MailingClient mailingClient;
+    private final RolesRepository rolesRepository;
 
     @Value("${admin.email}")
     private String defaultAdminEmail;
@@ -35,11 +38,13 @@ public class UsersServiceImpl implements UsersService {
             UsersRepository usersRepository,
             PrivilegesRepository privilegesRepository,
             BCryptPasswordEncoder passwordEncoder,
-            MailingClient mailingClient){
+            MailingClient mailingClient,
+            RolesRepository rolesRepository){
         this.usersRepository = usersRepository;
         this.privilegesRepository = privilegesRepository;
         this.passwordEncoder = passwordEncoder;
         this.mailingClient = mailingClient;
+        this.rolesRepository = rolesRepository;
     }
 
     @PostConstruct
@@ -48,11 +53,33 @@ public class UsersServiceImpl implements UsersService {
         Privilege createNewBackendUsersPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.CREATE_NEW_BACKEND_USERS);
         Privilege editBackendUsersPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.EDIT_BACKEND_USERS);
 
+        // Создаём стандартные роли
+        Role superuser = createRoleIfNotExist(
+                Role.StandartRoles.SUPERUSER,
+                new HashSet<>(Arrays.asList(
+                        createNewBackendUsersPrivilege,
+                        editBackendUsersPrivilege
+                ))
+        );
+
         // Создаём администратора, если таковой в базе отсутствует
-        User admin = createAdminIfNotExist(defaultAdminEmail, new HashSet<>(Arrays.asList(
-                createNewBackendUsersPrivilege,
-                editBackendUsersPrivilege
-        )));
+        User admin = createAdminIfNotExist(defaultAdminEmail, superuser);
+    }
+
+    /**
+     * Возвращает роль, если она существует, в противном случае - создаёт её и возвращает
+     * @param code - код роли
+     * @return - привилегия
+     */
+    private Role createRoleIfNotExist(String code, Set<Privilege> privileges){
+        Role role = rolesRepository.findByCode(code);
+        if(role == null)
+            role = rolesRepository.save(
+                    new Role()
+                        .setCode(code)
+                        .setPrivileges(privileges)
+            );
+        return role;
     }
 
     /**
@@ -70,14 +97,14 @@ public class UsersServiceImpl implements UsersService {
         return privilege;
     }
 
-    private User createAdminIfNotExist(String email, Set<Privilege> privileges){
+    private User createAdminIfNotExist(String email, Role role){
         User admin = usersRepository.findFirstByEmail(email);
         if(admin == null)
             admin = usersRepository.save(
                     new User()
                         .setEmail(defaultAdminEmail)
                         .setPassword(passwordEncoder.encode(defaultAdminPassword))
-                        .setPrivileges(privileges)
+                        .setRole(role)
             );
         return admin;
     }
