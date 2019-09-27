@@ -1,5 +1,8 @@
 package com.cappuccino.foodcourter.models.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.json.JSONObject;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -12,7 +15,7 @@ import java.util.Set;
 @Table(name = "roles")
 public class Role extends Auditable {
 
-    public final static class StandartRoles {
+    public final static class StandardRoles {
         public static final String SUPERUSER = "SUPERUSER";
         public static final String CUSTOMER = "CUSTOMER";
         public static final String OPERATOR = "OPERATOR";
@@ -63,6 +66,7 @@ public class Role extends Auditable {
         return this;
     }
 
+    @JsonIgnore
     public Set<User> getUsers() {
         return users;
     }
@@ -80,4 +84,12 @@ public class Role extends Auditable {
         this.privileges = privileges;
         return this;
     }
+
+    public JSONObject toJSONObject(){
+        return new JSONObject()
+                .put("id", id)
+                .put("code", code)
+                .put("privileges", privileges);
+    }
+
 }
