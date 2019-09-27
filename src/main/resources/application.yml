@@ -14,6 +14,8 @@ logging:
             sql:
               BasicBinder: TRACE
 
+mediaDirectory: /Users/semior/Desktop/krokcase_media
+
 # Параметры суперадмина (при отсутствии кого-либо с ролью суперадмина, создастся суперадмин с такими параметрами)
 admin:
   email: "ura2178@gmail.com"
