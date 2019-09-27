@@ -20,5 +20,39 @@ public class Order extends Auditable {
     @Column(name = "price")
     private Double price;
 
+    public Integer getId() {
+        return id;
+    }
 
+    public Order setId(Integer id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Order setDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public Order setTime(Date time) {
+        this.time = time;
+        return this;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public Order setPrice(Double price) {
+        this.price = price;
+        return this;
+    }
 }

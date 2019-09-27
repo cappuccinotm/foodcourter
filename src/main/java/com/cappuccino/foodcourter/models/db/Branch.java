@@ -19,4 +19,31 @@ public class Branch extends Auditable {
     )
     @JoinColumn(name = "vendor_id")
     private Vendor vendor;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Branch setId(Integer id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Branch setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public Vendor getVendor() {
+        return vendor;
+    }
+
+    public Branch setVendor(Vendor vendor) {
+        this.vendor = vendor;
+        return this;
+    }
 }
