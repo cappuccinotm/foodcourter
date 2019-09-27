@@ -29,6 +29,11 @@
       "name": "mail.smtp.port",
       "type": "java.lang.String",
       "description": "Порт почтового сервиса."
+    },
+    {
+      "name": "mediaDirectory",
+      "type": "java.lang.String",
+      "description": "Путь до директории с медиа контентом."
     }
   ]
 }
