@@ -9,6 +9,13 @@ public class Privilege {
     public final static class StandartPrivileges {
         public static final String CREATE_NEW_BACKEND_USERS = "create_new_backend_users";
         public static final String EDIT_BACKEND_USERS = "edit_backend_users";
+        public static final String CREATE_VENDORS = "create_vendors";
+        public static final String EDIT_VENDORS = "edit_vendors";
+        public static final String CREATE_BRANCHES = "create_branches";
+        public static final String EDIT_BRANCHES = "edit_branches";
+        public static final String CREATE_ORDERS = "create_orders";
+        public static final String EDIT_ORDERS = "edit_orders";
+        public static final String VIEW_ORDERS = "view_orders";
     }
 
     @Id

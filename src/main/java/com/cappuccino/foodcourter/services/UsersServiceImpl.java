@@ -52,13 +52,39 @@ public class UsersServiceImpl implements UsersService {
         // Создаём стандартные привелегии
         Privilege createNewBackendUsersPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.CREATE_NEW_BACKEND_USERS);
         Privilege editBackendUsersPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.EDIT_BACKEND_USERS);
+        Privilege createOrdersPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.CREATE_ORDERS);
+        Privilege editOrdersPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.EDIT_ORDERS);
+        Privilege createVendorsPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.CREATE_VENDORS);
+        Privilege editVendorsPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.EDIT_VENDORS);
+        Privilege createBranchesPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.CREATE_BRANCHES);
+        Privilege editBranchesPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.EDIT_BRANCHES);
+        Privilege viewOrdersPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.VIEW_ORDERS);
 
         // Создаём стандартные роли
         Role superuser = createRoleIfNotExist(
                 Role.StandartRoles.SUPERUSER,
                 new HashSet<>(Arrays.asList(
                         createNewBackendUsersPrivilege,
-                        editBackendUsersPrivilege
+                        editBackendUsersPrivilege,
+                        createVendorsPrivilege,
+                        editVendorsPrivilege,
+                        createBranchesPrivilege,
+                        editBranchesPrivilege
+                ))
+        );
+
+        Role customer = createRoleIfNotExist(
+                Role.StandartRoles.CUSTOMER,
+                new HashSet<>(Arrays.asList(
+                        createOrdersPrivilege,
+                        editOrdersPrivilege
+                ))
+        );
+
+        Role operator = createRoleIfNotExist(
+                Role.StandartRoles.OPERATOR,
+                new HashSet<>(Arrays.asList(
+                        viewOrdersPrivilege
                 ))
         );
 
@@ -69,7 +95,7 @@ public class UsersServiceImpl implements UsersService {
     /**
      * Возвращает роль, если она существует, в противном случае - создаёт её и возвращает
      * @param code - код роли
-     * @return - привилегия
+     * @return - роль
      */
     private Role createRoleIfNotExist(String code, Set<Privilege> privileges){
         Role role = rolesRepository.findByCode(code);

@@ -14,6 +14,8 @@ public class Role extends Auditable {
 
     public final static class StandartRoles {
         public static final String SUPERUSER = "SUPERUSER";
+        public static final String CUSTOMER = "CUSTOMER";
+        public static final String OPERATOR = "OPERATOR";
     }
 
     @Id
