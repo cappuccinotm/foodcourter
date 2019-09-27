@@ -1,0 +1,62 @@
+# Параметры деплоя - корневой URI
+server:
+  servlet:
+    context-path: /
+
+# Дебаггинг SQL запросов
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+
+# Параметры суперадмина (при отсутствии кого-либо с ролью суперадмина, создастся суперадмин с такими параметрами)
+admin:
+  email: "ura2178@gmail.com"
+  password: "admin"
+
+# Общие параметры Spring
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+    database: mysql
+  # Адрес сервера БД, название БД, логин и пароль
+  datasource:
+    url: "jdbc:mysql://127.0.0.1:3306/foodcourter?useUnicode=yes&characterEncoding=UTF-8&encoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true"
+    username: root
+    password: ZAMnAJNZ
+  # Параметры подключения к почтовому серверу
+  mail:
+    host: localhost # todo изменить
+    port: 25
+    properties:
+      mail:
+        transport:
+          protocol: smtp
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+            required: false
+  # Параметры отправки файлов на сервер
+  servlet:
+    multipart:
+      max-request-size: 15MB
+      max-file-size: 5MB
+
+# Параметры писем, отправляемых данным сервисом
+mail:
+  from-address: noreply@localhost # todo изменить
+  smtp:
+    starttls:
+      enable: false
+    auth: false
+    port: 2525
