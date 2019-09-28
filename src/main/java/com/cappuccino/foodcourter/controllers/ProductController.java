@@ -22,13 +22,17 @@ import java.security.Principal;
  */
 @RestController
 public class ProductController {
-    @Autowired
-    private ProductsService productsService;
+
+    private final ProductsService productsService;
 
     private final UsersService usersService;
 
-    public ProductController(UsersService usersService) {
+    public ProductController(
+            UsersService usersService,
+            ProductsService productsService
+    ) {
         this.usersService = usersService;
+        this.productsService = productsService;
     }
 
     @PostMapping("/api/product/create")
