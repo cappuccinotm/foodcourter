@@ -23,6 +23,7 @@ public interface FileAttachmentsService {
     Resource getFileAttachmentByFileName(String fileName) throws MalformedURLException;
     Resource getFileAttachmentById(long id) throws MalformedURLException;
     List<FileAttachment> saveAll(MultipartFile[] attachments, long attachmentId, Class<?> attachmentClass) throws IOException;
+    FileAttachment save(MultipartFile attachment, long attachmentId, Class<?> attachmentClass) throws IOException;
     boolean deleteById(long id);
 
 }

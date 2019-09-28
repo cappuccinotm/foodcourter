@@ -108,6 +108,13 @@ public class FileAttachmentsServiceImpl implements FileAttachmentsService{
         return result;
     }
 
+    @Override
+    public FileAttachment save(MultipartFile attachment, long attachmentId, Class<?> attachmentClass) throws IOException {
+        if(attachment.isEmpty())
+            return null;
+        return saveAttachment(attachment.getInputStream(), attachmentId, attachmentClass);
+    }
+
     public boolean deleteById(long id){
         FileAttachment attachment = repository.getOne(id);
         File file = new File(mediaPath + "/" + attachment.getDiskName());
