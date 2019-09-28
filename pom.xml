@@ -98,6 +98,9 @@
         <!-- хз -->
         <jaxb.version>2.3.0</jaxb.version>
         <spring-boot-configuration-processor.version>2.1.6.RELEASE</spring-boot-configuration-processor.version>
+
+        <!--main-class-->
+        <start-class>com.cappuccino.foodcourter.FoodCourterApplication</start-class>
     </properties>
 
     <dependencies>
