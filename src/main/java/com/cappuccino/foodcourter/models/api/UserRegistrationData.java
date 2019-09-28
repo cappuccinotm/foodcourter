@@ -1,5 +1,6 @@
 package com.cappuccino.foodcourter.models.api;
 
+import com.cappuccino.foodcourter.models.db.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -27,6 +28,10 @@ public class UserRegistrationData {
     public UserRegistrationData setRoleCode(String roleCode) {
         this.roleCode = roleCode;
         return this;
+    }
+
+    public boolean isNonCustomerRole(){
+        return roleCode != null && !roleCode.equals(Role.StandardRoles.CUSTOMER);
     }
 
     public String getUsername() {

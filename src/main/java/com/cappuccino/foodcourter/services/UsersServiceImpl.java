@@ -4,6 +4,7 @@ import com.cappuccino.foodcourter.models.api.UserRegistrationData;
 import com.cappuccino.foodcourter.models.db.Privilege;
 import com.cappuccino.foodcourter.models.db.Role;
 import com.cappuccino.foodcourter.models.db.User;
+import com.cappuccino.foodcourter.models.exceptions.RoleCodeSpecificationDeniedException;
 import com.cappuccino.foodcourter.models.exceptions.RoleNotFoundException;
 import com.cappuccino.foodcourter.models.exceptions.UsernameAlreadyTakenException;
 import com.cappuccino.foodcourter.repositories.PrivilegesRepository;
@@ -172,7 +173,25 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public User register(UserRegistrationData userData) throws UsernameAlreadyTakenException, RoleNotFoundException {
+    public User register(UserRegistrationData userData, User authorizedUser)
+            throws UsernameAlreadyTakenException,
+            RoleNotFoundException,
+            RoleCodeSpecificationDeniedException
+    {
+        if(
+                (authorizedUser == null && userData.isNonCustomerRole())
+                || (
+                        authorizedUser != null
+                        && !authorizedUser.hasPrivilege(Privilege.StandartPrivileges.CREATE_NEW_BACKEND_USERS)
+                        && userData.isNonCustomerRole()
+                )
+        ){
+            throw new RoleCodeSpecificationDeniedException();
+        }
+
+        if(userData.getRoleCode() == null)
+            userData.setRoleCode(Role.StandardRoles.CUSTOMER);
+
         if(usersRepository.existsByEmail(userData.getUsername()))
             throw new UsernameAlreadyTakenException();
 

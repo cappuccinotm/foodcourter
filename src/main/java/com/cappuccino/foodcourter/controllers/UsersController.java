@@ -1,8 +1,8 @@
 package com.cappuccino.foodcourter.controllers;
 
 import com.cappuccino.foodcourter.models.api.UserRegistrationData;
-import com.cappuccino.foodcourter.models.db.Role;
 import com.cappuccino.foodcourter.models.db.User;
+import com.cappuccino.foodcourter.models.exceptions.RoleCodeSpecificationDeniedException;
 import com.cappuccino.foodcourter.models.exceptions.RoleNotFoundException;
 import com.cappuccino.foodcourter.models.exceptions.UsernameAlreadyTakenException;
 import com.cappuccino.foodcourter.resources.StaticStrings;
@@ -48,18 +48,8 @@ public class UsersController {
             @RequestBody UserRegistrationData userData
     ){
         User user = principal != null ? usersService.getByEmail(principal.getName()) : null;
-        if (user != null
-            && !user.getRole().getCode().equals(Role.StandardRoles.SUPERUSER)
-            && userData.getRoleCode() != null
-            && !userData.getRoleCode().equals("")
-        ) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(StaticStrings.YOU_MAY_NOT_SPECIFY_ROLE_CODE);
-        }
-
         try{
-            usersService.register(userData);
+            usersService.register(userData, user);
         }catch (UsernameAlreadyTakenException e){
             return ResponseEntity
                     .badRequest()
@@ -68,6 +58,10 @@ public class UsersController {
             return ResponseEntity
                     .badRequest()
                     .body(StaticStrings.ROLE_CODE_NOT_FOUND);
+        } catch (RoleCodeSpecificationDeniedException e) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(StaticStrings.YOU_MAY_NOT_SPECIFY_ROLE_CODE);
         }
         return ResponseEntity.ok("");
     }
