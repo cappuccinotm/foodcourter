@@ -1,10 +1,7 @@
 package com.cappuccino.foodcourter.controllers;
 
 import com.cappuccino.foodcourter.models.api.VendorDTO;
-import com.cappuccino.foodcourter.models.db.Privilege;
-import com.cappuccino.foodcourter.models.db.Product;
-import com.cappuccino.foodcourter.models.db.User;
-import com.cappuccino.foodcourter.models.db.Vendor;
+import com.cappuccino.foodcourter.models.db.*;
 import com.cappuccino.foodcourter.resources.StaticStrings;
 import com.cappuccino.foodcourter.services.FileAttachmentsService;
 import com.cappuccino.foodcourter.services.UsersService;
@@ -46,22 +43,23 @@ public class VendorController {
     public ResponseEntity<String> createVendor(
             Principal principal,
             @RequestParam(name = "name") String name,
-            @RequestPart(value = "image", required = false) final MultipartFile image
+            @RequestPart(value = "image", required = false) final MultipartFile[] images
     ){
         User user = usersService.getByEmail(principal.getName());
 
-        if(!user.hasPrivilege(Privilege.StandartPrivileges.CREATE_VENDORS) || name.isEmpty()){
+        if (!user.hasPrivilege(Privilege.StandartPrivileges.CREATE_VENDORS) || name.isEmpty() || images.length == 0) {
             return ResponseEntity
                     .badRequest()
                     .body(StaticStrings.INCORRECT_FORMAT);
         }
 
-        Vendor vendor = vendorService.create(new VendorDTO(name));
         try {
-            if (!image.isEmpty())
-                fileAttachmentsService.save(image, vendor.getId(), Vendor.class);
+            FileAttachment fileAttachment = fileAttachmentsService.saveAttachment(images[0].getInputStream());
+            vendorService.create(new VendorDTO(name, fileAttachment));
         } catch (IOException e) {
-            log.error(e);
+            return ResponseEntity
+                    .badRequest()
+                    .body(StaticStrings.INCORRECT_FORMAT);
         }
         return new ResponseEntity<>("", HttpStatus.OK);
     }

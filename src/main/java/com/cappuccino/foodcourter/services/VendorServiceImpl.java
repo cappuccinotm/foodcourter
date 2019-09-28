@@ -20,10 +20,10 @@ public class VendorServiceImpl implements VendorService {
     }
 
     @Override
-    public Vendor create(VendorDTO vendorDTO) {
+    public void create(VendorDTO vendorDTO) {
         Vendor newVendor = new Vendor();
         newVendor.setName(vendorDTO.getName());
+        newVendor.setLogo(vendorDTO.getLogo());
         vendorsRepository.save(newVendor);
-        return newVendor;
     }
 }

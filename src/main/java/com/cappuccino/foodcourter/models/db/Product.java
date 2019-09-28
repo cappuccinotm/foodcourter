@@ -31,7 +31,7 @@ public class Product extends Auditable {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinTable(
-            name="products_images",
+            name = "products_images",
             joinColumns = @JoinColumn(name="product_id"),
             inverseJoinColumns = @JoinColumn(name="image_id")
     )

@@ -1,5 +1,6 @@
 package com.cappuccino.foodcourter.models.api;
 
+import com.cappuccino.foodcourter.models.db.FileAttachment;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -11,8 +12,21 @@ public class VendorDTO {
     @JsonProperty("name")
     private String name;
 
-    public VendorDTO(String name) {
+    @JsonProperty("logo")
+    private FileAttachment logo;
+
+    public VendorDTO(String name, FileAttachment logo) {
         this.name = name;
+        this.logo = logo;
+    }
+
+    public FileAttachment getLogo() {
+        return logo;
+    }
+
+    public VendorDTO setLogo(FileAttachment logo) {
+        this.logo = logo;
+        return this;
     }
 
     public String getName() {

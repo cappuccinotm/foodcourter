@@ -90,7 +90,7 @@ public class FileAttachmentsServiceImpl implements FileAttachmentsService{
     }
 
     @Override
-    public FileAttachment save(MultipartFile attachment, long attachmentId, Class<?> attachmentClass) throws IOException {
+    public FileAttachment save(MultipartFile attachment) throws IOException {
         if(attachment.isEmpty())
             return null;
         return saveAttachment(attachment.getInputStream());

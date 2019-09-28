@@ -10,6 +10,6 @@ import com.cappuccino.foodcourter.models.db.Vendor;
  */
 public interface VendorService {
 
-    Vendor create(VendorDTO vendorDTO);
+    void create(VendorDTO vendorDTO);
 
 }
