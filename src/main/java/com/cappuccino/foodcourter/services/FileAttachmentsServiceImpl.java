@@ -50,32 +50,14 @@ public class FileAttachmentsServiceImpl implements FileAttachmentsService{
         }
     }
 
-    public FileAttachment saveAttachment(InputStream inputStream, long attachmentId, Class<?> attachmentClass) throws IOException {
+    public FileAttachment saveAttachment(InputStream inputStream) throws IOException {
         String filename = UUID.randomUUID().toString() + ".png";
 
         Files.copy(inputStream, mediaFolder.resolve(filename));
 
         FileAttachment fileAttachment = new FileAttachment();
         fileAttachment.setDiskName(filename);
-        fileAttachment.setAttachmentId(attachmentId);
-        fileAttachment.setAttachmentClassType(attachmentClass.getName());
         return repository.save(fileAttachment);
-    }
-
-    public Set<Resource> getFileAttachments(long attachmentId, Class<?> attachmentClass) throws MalformedURLException {
-        Set<FileAttachment> attachments = repository.getAllByAttachmentIdAndAttachmentClassType(attachmentId, attachmentClass.getName());
-        Set<Resource> result = new HashSet<>();
-
-        for(FileAttachment attachment: attachments){
-            Path file = mediaFolder.resolve(attachment.getDiskName());
-            result.add(new UrlResource(file.toUri()));
-        }
-
-        return result;
-    }
-
-    public Set<FileAttachment> getFileAttachmentsDescriptions(long attachmentId, Class<?> attachmentClass) {
-        return repository.getAllByAttachmentIdAndAttachmentClassType(attachmentId, attachmentClass.getName());
     }
 
     public Resource getFileAttachmentByFileName(String fileName) throws MalformedURLException {
@@ -94,25 +76,24 @@ public class FileAttachmentsServiceImpl implements FileAttachmentsService{
         Resource resource = new UrlResource(file.toUri());
         if(!resource.exists() || !resource.isReadable())
             throw new RuntimeException("File was not found! FileId: " + fileAttachment.getId());
-
         return resource;
 
     }
 
-    public List<FileAttachment> saveAll(MultipartFile[] attachments, long attachmentId, Class<?> attachmentClass) throws IOException {
+    public List<FileAttachment> saveAll(MultipartFile[] attachments) throws IOException {
         List<FileAttachment> result = new ArrayList<>();
         for(MultipartFile file: attachments){
             if(!file.isEmpty())
-                result.add(saveAttachment(file.getInputStream(), attachmentId, attachmentClass));
+                result.add(saveAttachment(file.getInputStream()));
         }
         return result;
     }
 
     @Override
-    public FileAttachment save(MultipartFile attachment, long attachmentId, Class<?> attachmentClass) throws IOException {
+    public FileAttachment save(MultipartFile attachment) throws IOException {
         if(attachment.isEmpty())
             return null;
-        return saveAttachment(attachment.getInputStream(), attachmentId, attachmentClass);
+        return saveAttachment(attachment.getInputStream());
     }
 
     public boolean deleteById(long id){

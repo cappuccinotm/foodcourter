@@ -1,6 +1,7 @@
 package com.cappuccino.foodcourter.models.db;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,8 +15,13 @@ public class Branch extends Auditable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "address")
-    private String address;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+    @JoinTable(
+            name = "branches_images",
+            joinColumns = @JoinColumn(name="branch_id"),
+            inverseJoinColumns = @JoinColumn(name="image_id")
+    )
+    private List<FileAttachment> interiorPhotos;
 
     @ManyToOne(
             fetch = FetchType.LAZY,
@@ -47,6 +53,15 @@ public class Branch extends Auditable {
     )
     private Set<Product> products;
 
+    public List<FileAttachment> getInteriorPhotos() {
+        return interiorPhotos;
+    }
+
+    public Branch setInteriorPhotos(List<FileAttachment> interiorPhotos) {
+        this.interiorPhotos = interiorPhotos;
+        return this;
+    }
+
     public Set<Product> getProducts() {
         return products;
     }
@@ -62,15 +77,6 @@ public class Branch extends Auditable {
 
     public Branch setShoppingCenter(ShoppingCenter shoppingCenter) {
         this.shoppingCenter = shoppingCenter;
-        return this;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public Branch setAddress(String address) {
-        this.address = address;
         return this;
     }
 

@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Yelshat Duskaliyev <semior> ura2178@gmail.com
@@ -17,13 +16,11 @@ import java.util.Set;
  */
 public interface FileAttachmentsService {
 
-    FileAttachment saveAttachment(InputStream inputStream, long attachmentId, Class<?> attachmentClass) throws IOException;
-    Set<Resource> getFileAttachments(long attachmentId, Class<?> attachmentClass) throws MalformedURLException;
-    Set<FileAttachment> getFileAttachmentsDescriptions(long attachmentId, Class<?> attachmentClass);
+    FileAttachment saveAttachment(InputStream inputStream) throws IOException;
     Resource getFileAttachmentByFileName(String fileName) throws MalformedURLException;
     Resource getFileAttachmentById(long id) throws MalformedURLException;
-    List<FileAttachment> saveAll(MultipartFile[] attachments, long attachmentId, Class<?> attachmentClass) throws IOException;
-    FileAttachment save(MultipartFile attachment, long attachmentId, Class<?> attachmentClass) throws IOException;
+    List<FileAttachment> saveAll(MultipartFile[] attachments) throws IOException;
+    FileAttachment save(MultipartFile attachment) throws IOException;
     boolean deleteById(long id);
 
 }

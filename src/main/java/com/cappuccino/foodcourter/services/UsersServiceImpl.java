@@ -66,6 +66,7 @@ public class UsersServiceImpl implements UsersService {
         Privilege viewOrdersPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.VIEW_ORDERS);
         Privilege createProductsPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.CREATE_PRODUCTS);
         Privilege editProductsPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.EDIT_PRODUCTS);
+        Privilege createShoppingCentersPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.CREATE_SHOPPING_CENTERS);
         Privilege viewShoppingCentersPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.VIEW_SHOPPING_CENTERS);
 
         // Создаём стандартные роли
@@ -83,7 +84,8 @@ public class UsersServiceImpl implements UsersService {
                         editOrdersPrivilege,
                         createProductsPrivilege,
                         editProductsPrivilege,
-                        viewShoppingCentersPrivilege
+                        viewShoppingCentersPrivilege,
+                        createShoppingCentersPrivilege
                 ))
         );
 
