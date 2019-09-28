@@ -18,28 +18,6 @@ public class FileAttachment extends Auditable {
     @Column(name = "disk_name")
     private String diskName;
 
-    @Column(name = "attachment_id")
-    private long attachmentId;
-
-    @Column(name = "attachment_type")
-    private String attachmentClassType;
-
-    public long getAttachmentId() {
-        return attachmentId;
-    }
-
-    public void setAttachmentId(long attachmentId) {
-        this.attachmentId = attachmentId;
-    }
-
-    public String getAttachmentClassType() {
-        return attachmentClassType;
-    }
-
-    public void setAttachmentClassType(String attachmentClassType) {
-        this.attachmentClassType = attachmentClassType;
-    }
-
     public long getId() {
         return id;
     }
