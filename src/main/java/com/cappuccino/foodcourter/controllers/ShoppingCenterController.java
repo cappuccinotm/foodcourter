@@ -7,11 +7,9 @@ import com.cappuccino.foodcourter.models.db.User;
 import com.cappuccino.foodcourter.resources.StaticStrings;
 import com.cappuccino.foodcourter.services.ShoppingCentersService;
 import com.cappuccino.foodcourter.services.UsersService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -68,5 +66,20 @@ public class ShoppingCenterController {
         }
         Set<Branch> branchSet = shoppingCentersService.getBranchesOfShoppingCenter(id);
         return ResponseEntity.ok(branchSet);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<?> createCenter(
+            Principal principal,
+            @RequestBody ShoppingCenter shoppingCenter
+    ) {
+        User user = usersService.getByEmail(principal.getName());
+        if (!user.hasPrivilege(Privilege.StandartPrivileges.CREATE_SHOPPING_CENTERS)) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(StaticStrings.NO_PRIVILEGE);
+        }
+        shoppingCentersService.createCenter(shoppingCenter);
+        return new ResponseEntity<>("", HttpStatus.OK);
     }
 }

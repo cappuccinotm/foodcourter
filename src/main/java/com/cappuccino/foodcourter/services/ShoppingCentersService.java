@@ -32,5 +32,9 @@ public class ShoppingCentersService {
     public Boolean isIdValid(Integer id) {
         return shoppingCentersRepository.findById(id).isPresent();
     }
+
+    public void createCenter(ShoppingCenter shoppingCenter) {
+        shoppingCentersRepository.save(shoppingCenter);
+    }
 }
 
