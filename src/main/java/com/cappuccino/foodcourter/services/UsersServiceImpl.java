@@ -65,6 +65,9 @@ public class UsersServiceImpl implements UsersService {
         Privilege editBranchesPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.EDIT_BRANCHES);
         Privilege viewOrdersPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.VIEW_ORDERS);
         Privilege createProductsPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.CREATE_PRODUCTS);
+        Privilege editProductsPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.EDIT_PRODUCTS);
+        Privilege createShoppingCentersPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.CREATE_SHOPPING_CENTERS);
+        Privilege viewShoppingCentersPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.VIEW_SHOPPING_CENTERS);
 
         // Создаём стандартные роли
         Role superuser = createRoleIfNotExist(
@@ -79,7 +82,10 @@ public class UsersServiceImpl implements UsersService {
                         viewOrdersPrivilege,
                         createOrdersPrivilege,
                         editOrdersPrivilege,
-                        createProductsPrivilege
+                        createProductsPrivilege,
+                        editProductsPrivilege,
+                        viewShoppingCentersPrivilege,
+                        createShoppingCentersPrivilege
                 ))
         );
 
@@ -87,7 +93,8 @@ public class UsersServiceImpl implements UsersService {
                 Role.StandardRoles.CUSTOMER,
                 new HashSet<>(Arrays.asList(
                         createOrdersPrivilege,
-                        editOrdersPrivilege
+                        editOrdersPrivilege,
+                        viewShoppingCentersPrivilege
                 ))
         );
 
@@ -95,6 +102,20 @@ public class UsersServiceImpl implements UsersService {
                 Role.StandardRoles.OPERATOR,
                 new HashSet<>(Collections.singletonList(
                         viewOrdersPrivilege
+                ))
+        );
+
+        Role head = createRoleIfNotExist(
+                Role.StandardRoles.HEAD,
+                new HashSet<>(Arrays.asList(
+                        createNewBackendUsersPrivilege,
+                        editBackendUsersPrivilege,
+                        createBranchesPrivilege,
+                        editBranchesPrivilege,
+                        viewOrdersPrivilege,
+                        createProductsPrivilege,
+                        editProductsPrivilege,
+                        viewShoppingCentersPrivilege
                 ))
         );
 

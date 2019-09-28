@@ -14,8 +14,21 @@ public class Vendor extends Auditable {
     @Column(name = "name", unique = true)
     private String name;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+    @JoinColumn(name = "attachment_id")
+    private FileAttachment logo;
+
     @OneToMany(mappedBy = "vendor")
     private Set<Branch> branches;
+
+    public FileAttachment getLogo() {
+        return logo;
+    }
+
+    public Vendor setLogo(FileAttachment logo) {
+        this.logo = logo;
+        return this;
+    }
 
     public Integer getId() {
         return id;
