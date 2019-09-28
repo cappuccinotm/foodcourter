@@ -1,10 +1,12 @@
 package com.cappuccino.foodcourter.services;
 
+import com.cappuccino.foodcourter.models.db.Branch;
 import com.cappuccino.foodcourter.models.db.ShoppingCenter;
 import com.cappuccino.foodcourter.repositories.ShoppingCentersRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Oybek Kasimov <MrKasimov> oibekkasymov@gmail.com
@@ -22,4 +24,13 @@ public class ShoppingCentersService {
     public List<ShoppingCenter> getAll() {
         return shoppingCentersRepository.findAll();
     }
+
+    public Set<Branch> getBranchesOfShoppingCenter(Integer id) {
+        return shoppingCentersRepository.findById(id).get().getBranches();
+    }
+
+    public Boolean isIdValid(Integer id) {
+        return shoppingCentersRepository.findById(id).isPresent();
+    }
 }
+

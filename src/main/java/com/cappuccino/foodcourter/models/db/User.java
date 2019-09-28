@@ -68,7 +68,10 @@ public class User extends Auditable {
     }
 
     public boolean hasPrivilege(String privilegeCode){
-        return role.getCode().equals(privilegeCode);
+        for(Privilege privilege: role.getPrivileges())
+            if(privilege.getCode().equals(privilegeCode))
+                return true;
+        return false;
     }
 
     public List<GrantedAuthority> getAuthorities(){

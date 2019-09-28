@@ -12,4 +12,5 @@ public final class StaticStrings {
     public static final String YOU_MAY_NOT_SPECIFY_ROLE_CODE = "Вы не можете задавать код пользователя";
     public static final String INCORRECT_FORMAT = "Некорректный формат";
     public static final String NO_PRIVILEGE = "Недостаточно прав для данного действия";
+    public static final String INVALID_ID = "Некорректный идентификатор";
 }
