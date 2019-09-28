@@ -21,6 +21,13 @@ public class Branch extends Auditable {
             fetch = FetchType.LAZY,
             cascade = CascadeType.DETACH
     )
+    @JoinColumn(name = "shopping_center_id")
+    private ShoppingCenter shoppingCenter;
+
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.DETACH
+    )
     @JoinColumn(name = "vendor_id")
     private Vendor vendor;
 
@@ -46,6 +53,15 @@ public class Branch extends Auditable {
 
     public Branch setProducts(Set<Product> products) {
         this.products = products;
+        return this;
+    }
+
+    public ShoppingCenter getShoppingCenter() {
+        return shoppingCenter;
+    }
+
+    public Branch setShoppingCenter(ShoppingCenter shoppingCenter) {
+        this.shoppingCenter = shoppingCenter;
         return this;
     }
 
