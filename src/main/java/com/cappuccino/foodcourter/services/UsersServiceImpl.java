@@ -65,6 +65,7 @@ public class UsersServiceImpl implements UsersService {
         Privilege editBranchesPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.EDIT_BRANCHES);
         Privilege viewOrdersPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.VIEW_ORDERS);
         Privilege createProductsPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.CREATE_PRODUCTS);
+        Privilege editProductsPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.EDIT_PRODUCTS);
 
         // Создаём стандартные роли
         Role superuser = createRoleIfNotExist(
@@ -79,7 +80,8 @@ public class UsersServiceImpl implements UsersService {
                         viewOrdersPrivilege,
                         createOrdersPrivilege,
                         editOrdersPrivilege,
-                        createProductsPrivilege
+                        createProductsPrivilege,
+                        editProductsPrivilege
                 ))
         );
 
@@ -95,6 +97,19 @@ public class UsersServiceImpl implements UsersService {
                 Role.StandardRoles.OPERATOR,
                 new HashSet<>(Collections.singletonList(
                         viewOrdersPrivilege
+                ))
+        );
+
+        Role head = createRoleIfNotExist(
+                Role.StandardRoles.HEAD,
+                new HashSet<>(Arrays.asList(
+                        createNewBackendUsersPrivilege,
+                        editBackendUsersPrivilege,
+                        createBranchesPrivilege,
+                        editBranchesPrivilege,
+                        viewOrdersPrivilege,
+                        createProductsPrivilege,
+                        editProductsPrivilege
                 ))
         );
 
