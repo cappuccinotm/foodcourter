@@ -1,6 +1,7 @@
 package com.cappuccino.foodcourter.models.db;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @author Oybek Kasimov <MrKasimov> oibekkasymov@gmail.com
@@ -27,6 +28,23 @@ public class Product extends Auditable {
 
     @Column(name = "description")
     private String description;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+    @JoinTable(
+            name="products_images",
+            joinColumns = @JoinColumn(name="product_id"),
+            inverseJoinColumns = @JoinColumn(name="image_id")
+    )
+    private List<FileAttachment> images;
+
+    public List<FileAttachment> getImages() {
+        return images;
+    }
+
+    public Product setImages(List<FileAttachment> images) {
+        this.images = images;
+        return this;
+    }
 
     public Integer getId() {
         return id;

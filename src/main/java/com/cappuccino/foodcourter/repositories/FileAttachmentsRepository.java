@@ -12,6 +12,4 @@ import java.util.Set;
  */
 public interface FileAttachmentsRepository extends JpaRepository<FileAttachment, Long> {
 
-    Set<FileAttachment> getAllByAttachmentIdAndAttachmentClassType(long attachmentId, String attachmentType);
-
 }

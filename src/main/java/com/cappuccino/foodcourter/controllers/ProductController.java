@@ -1,6 +1,7 @@
 package com.cappuccino.foodcourter.controllers;
 
 import com.cappuccino.foodcourter.models.api.ProductDTO;
+import com.cappuccino.foodcourter.models.db.FileAttachment;
 import com.cappuccino.foodcourter.models.db.Privilege;
 import com.cappuccino.foodcourter.models.db.Product;
 import com.cappuccino.foodcourter.models.db.User;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 
 /**
  * @author Oybek Kasimov <MrKasimov> oibekkasymov@gmail.com
@@ -57,7 +59,8 @@ public class ProductController {
 
         Product product = productsService.create(productData);
         try {
-            fileAttachmentsService.saveAll(images, product.getId(), Product.class);
+            List<FileAttachment> attachments = fileAttachmentsService.saveAll(images);
+
         } catch (IOException e) {
             log.error(e);
         }

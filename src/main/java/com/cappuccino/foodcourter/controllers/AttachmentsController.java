@@ -51,15 +51,6 @@ public class AttachmentsController {
         return new ResponseEntity<>(service.deleteById(id), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/addAttachment", method = RequestMethod.POST)
-    public ResponseEntity<Boolean> addAttachmentTest(
-            @RequestParam("images") MultipartFile[] images
-    ) throws IOException {
-        service.saveAll(images, 1, User.class);
-        return new ResponseEntity<>(true, HttpStatus.OK);
-    }
-
-
     @RequestMapping(
             value = "/byId/{attachmentId}",
             method = RequestMethod.GET,
