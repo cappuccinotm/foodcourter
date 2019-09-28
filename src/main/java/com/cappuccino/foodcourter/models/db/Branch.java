@@ -14,9 +14,6 @@ public class Branch extends Auditable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "address")
-    private String address;
-
     @ManyToOne(
             fetch = FetchType.LAZY,
             cascade = CascadeType.DETACH
@@ -62,15 +59,6 @@ public class Branch extends Auditable {
 
     public Branch setShoppingCenter(ShoppingCenter shoppingCenter) {
         this.shoppingCenter = shoppingCenter;
-        return this;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public Branch setAddress(String address) {
-        this.address = address;
         return this;
     }
 

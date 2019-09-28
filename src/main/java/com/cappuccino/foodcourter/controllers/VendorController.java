@@ -12,10 +12,7 @@ import com.cappuccino.foodcourter.services.VendorService;
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -48,24 +45,24 @@ public class VendorController {
     @PostMapping("/create")
     public ResponseEntity<String> createVendor(
             Principal principal,
-            @RequestPart final VendorDTO vendorDTO,
+            @RequestParam(name = "name") String name,
             @RequestPart(value = "image", required = false) final MultipartFile image
     ){
         User user = usersService.getByEmail(principal.getName());
 
-        if(!user.hasPrivilege(Privilege.StandartPrivileges.CREATE_VENDORS) || !vendorDTO.isValid()){
+        if(!user.hasPrivilege(Privilege.StandartPrivileges.CREATE_VENDORS) || name.isEmpty()){
             return ResponseEntity
                     .badRequest()
                     .body(StaticStrings.INCORRECT_FORMAT);
         }
 
-        Vendor vendor = vendorService.create(vendorDTO);
+        Vendor vendor = vendorService.create(new VendorDTO(name));
         try {
-            fileAttachmentsService.save(image, vendor.getId(), Vendor.class);
+            if (!image.isEmpty())
+                fileAttachmentsService.save(image, vendor.getId(), Vendor.class);
         } catch (IOException e) {
             log.error(e);
         }
         return new ResponseEntity<>("", HttpStatus.OK);
     }
-
 }
