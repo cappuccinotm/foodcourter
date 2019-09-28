@@ -18,6 +18,7 @@ public class Privilege {
         public static final String VIEW_ORDERS = "view_orders";
         public static final String CREATE_PRODUCTS = "create_products";
         public static final String EDIT_PRODUCTS = "edit_products";
+        public static final String VIEW_SHOPPING_CENTERS = "view_shopping_centers";
     }
 
     @Id
