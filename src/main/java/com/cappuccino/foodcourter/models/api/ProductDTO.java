@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @project foodcourter
  * @since 28.09.2019
  */
-public class ProductCreationData {
+public class ProductDTO{
     @JsonProperty("name")
     private String name;
 
@@ -28,7 +28,7 @@ public class ProductCreationData {
         return !(name.equals("") || price <= 0.0);
     }
 
-    public ProductCreationData setName(String name) {
+    public ProductDTO setName(String name) {
         this.name = name;
         return this;
     }
@@ -37,7 +37,7 @@ public class ProductCreationData {
         return price;
     }
 
-    public ProductCreationData setPrice(Double price) {
+    public ProductDTO setPrice(Double price) {
         this.price = price;
         return this;
     }
@@ -46,7 +46,7 @@ public class ProductCreationData {
         return description;
     }
 
-    public ProductCreationData setDescription(String description) {
+    public ProductDTO setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -55,7 +55,7 @@ public class ProductCreationData {
         return needToPromote;
     }
 
-    public ProductCreationData setNeedToPromote(Boolean needToPromote) {
+    public ProductDTO setNeedToPromote(Boolean needToPromote) {
         this.needToPromote = needToPromote;
         return this;
     }

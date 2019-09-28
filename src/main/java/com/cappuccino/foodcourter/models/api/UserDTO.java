@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @project foodcourter
  * @since 27.09.2019
  */
-public class UserRegistrationData {
+public class UserDTO{
     @JsonProperty("username")
     private String username;
 
@@ -25,7 +25,7 @@ public class UserRegistrationData {
         return roleCode;
     }
 
-    public UserRegistrationData setRoleCode(String roleCode) {
+    public UserDTO setRoleCode(String roleCode) {
         this.roleCode = roleCode;
         return this;
     }
@@ -38,7 +38,7 @@ public class UserRegistrationData {
         return username;
     }
 
-    public UserRegistrationData setUsername(String username) {
+    public UserDTO setUsername(String username) {
         this.username = username;
         return this;
     }
@@ -47,7 +47,7 @@ public class UserRegistrationData {
         return password;
     }
 
-    public UserRegistrationData setPassword(String password) {
+    public UserDTO setPassword(String password) {
         this.password = password;
         return this;
     }
@@ -56,7 +56,7 @@ public class UserRegistrationData {
         return phoneNumber;
     }
 
-    public UserRegistrationData setPhoneNumber(String phoneNumber) {
+    public UserDTO setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
         return this;
     }

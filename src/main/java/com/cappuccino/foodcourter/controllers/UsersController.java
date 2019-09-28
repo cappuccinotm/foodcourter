@@ -1,6 +1,6 @@
 package com.cappuccino.foodcourter.controllers;
 
-import com.cappuccino.foodcourter.models.api.UserRegistrationData;
+import com.cappuccino.foodcourter.models.api.UserDTO;
 import com.cappuccino.foodcourter.models.db.User;
 import com.cappuccino.foodcourter.models.exceptions.RoleCodeSpecificationDeniedException;
 import com.cappuccino.foodcourter.models.exceptions.RoleNotFoundException;
@@ -45,7 +45,7 @@ public class UsersController {
     @PostMapping("/api/public/user/register")
     public ResponseEntity<String> registerUser(
             Principal principal,
-            @RequestBody UserRegistrationData userData
+            @RequestBody UserDTO userData
     ){
         User user = principal != null ? usersService.getByEmail(principal.getName()) : null;
         try{

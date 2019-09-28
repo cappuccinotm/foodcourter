@@ -1,6 +1,6 @@
 package com.cappuccino.foodcourter.services;
 
-import com.cappuccino.foodcourter.models.api.UserRegistrationData;
+import com.cappuccino.foodcourter.models.api.UserDTO;
 import com.cappuccino.foodcourter.models.db.Privilege;
 import com.cappuccino.foodcourter.models.db.Role;
 import com.cappuccino.foodcourter.models.db.User;
@@ -188,7 +188,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public User register(UserRegistrationData userData, User authorizedUser)
+    public User register(UserDTO userData, User authorizedUser)
             throws UsernameAlreadyTakenException,
             RoleNotFoundException,
             RoleCodeSpecificationDeniedException
