@@ -63,6 +63,7 @@ public class UsersServiceImpl implements UsersService {
         Privilege createBranchesPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.CREATE_BRANCHES);
         Privilege editBranchesPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.EDIT_BRANCHES);
         Privilege viewOrdersPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.VIEW_ORDERS);
+        Privilege createProductsPrivilege = createPrivilegeIfNotExist(Privilege.StandartPrivileges.CREATE_PRODUCTS);
 
         // Создаём стандартные роли
         Role superuser = createRoleIfNotExist(
@@ -73,7 +74,11 @@ public class UsersServiceImpl implements UsersService {
                         createVendorsPrivilege,
                         editVendorsPrivilege,
                         createBranchesPrivilege,
-                        editBranchesPrivilege
+                        editBranchesPrivilege,
+                        viewOrdersPrivilege,
+                        createOrdersPrivilege,
+                        editOrdersPrivilege,
+                        createProductsPrivilege
                 ))
         );
 
