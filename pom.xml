@@ -81,7 +81,7 @@
         <apache-commons.version>3.8.1</apache-commons.version>
 
         <!-- Авторизация в админ-панели, роли и управление пользователями -->
-        <spring-security.version>5.1.5.RELEASE</spring-security.version>
+        <spring-security.version>5.1.11.RELEASE</spring-security.version>
         <spring-security-taglibs.version>5.0.7.RELEASE</spring-security-taglibs.version>
 
         <!-- Генерация паролей -->
